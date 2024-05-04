@@ -1,0 +1,20 @@
+name: Tests
+
+on:
+  push:
+    branches: [ "main", "release/**" ]
+  pull_request:
+    branches: [ "main", "release/**" ]
+
+jobs:
+  tests:
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4.1.1
+
+    - name: Configure CMake
+      run: cmake -S ${{github.workspace}}/tests -B ${{github.workspace}}/build -GNinja
+
+    - name: Run tests
+      run: ninja -C ${{github.workspace}}/build docs
